@@ -256,7 +256,7 @@ myLogHook = return ()
 -- myStartupHook = return ()
 myStartupHook = do
     setWMName "LG3D" 
-    spawn "sleep 5 & /usr/bin/xmodmap ~/.Xmodmap"
+    spawn "setxkbmap -option caps:swapescape"
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
