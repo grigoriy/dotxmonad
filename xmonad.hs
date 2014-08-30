@@ -23,7 +23,7 @@ import qualified Data.Map        as M
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "xterm"
+myTerminal      = "urxvt"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -257,6 +257,8 @@ myLogHook = return ()
 myStartupHook = do
     setWMName "LG3D" 
     spawn "setxkbmap -option caps:swapescape"
+    spawn "firefox"
+    spawn "urxvt"
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
