@@ -16,6 +16,7 @@ import XMonad.Util.EZConfig(additionalKeys)
 import System.IO
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.SetWMName
+import XMonad.Layout.ResizableTile
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -136,6 +137,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Run xmessage with a summary of the default keybindings (useful for beginners)
     , ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
+
+    -- Resizable layout key bindings
+    , ((modm,               xK_a), sendMessage MirrorShrink)
+    , ((modm,               xK_z), sendMessage MirrorExpand)
     ]
     ++
 
@@ -160,6 +165,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((0, 0x1008FF11), spawn "amixer set Master 5%-"),
       ((0, 0x1008FF13), spawn "amixer set Master 5%+"),
       ((0, 0x1008FF12), spawn "amixer set Master toggle")]
+
 
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
@@ -194,7 +200,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 myLayout = avoidStruts $ smartBorders $ tiled ||| Mirror tiled ||| Full
   where
      -- default tiling algorithm partitions the screen into two panes
-     tiled   = Tall nmaster delta ratio
+     tiled   = ResizableTall nmaster delta ratio []
 
      -- The default number of windows in the master pane
      nmaster = 1
@@ -289,6 +295,7 @@ defaults = defaultConfig {
         mouseBindings      = myMouseBindings,
 
       -- hooks, layouts
+        -- layoutHook         = myLayout,
         layoutHook         = myLayout,
         manageHook         = myManageHook,
         handleEventHook    = myEventHook,
